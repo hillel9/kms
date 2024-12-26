@@ -1,0 +1,87 @@
+<div class="spaceship"> 
+</div>
+
+<style>
+body{
+padding:0; margin:0;
+overflow:hidden;
+}
+
+.spaceship{
+  transform: scale(1); /* For preview purpose only */
+  width: 300px; 
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 8px;
+  box-sizing:border-box;
+}
+
+.led{
+  width: 8px; height: 8px;
+  background-color: #ffffff; opacity:0.1;
+  border-radius:6px;
+  transition: background 300ms;
+}
+
+.led-on{
+  background-color: #ffffff; opacity:0.5
+}
+</style>
+
+<script>
+const spaceship = document.querySelector('.spaceship');
+
+for (let i = 0; i < 406; i++) {
+  const led = document.createElement('div');
+  
+  led.className = 'led';
+  
+  spaceship.appendChild(led);
+}
+
+const led = document.querySelectorAll('.led');
+const ledCount = led.length;
+let waveIndex = 0;
+let reverseWaveIndex = ledCount - 1;
+
+function generateRandomNumber(){
+    count = ledCount - 1;
+    return Math.floor(Math.random() * count) + 1;
+}
+
+function flicker(){
+const randomNumber = generateRandomNumber();
+led[randomNumber].classList.toggle("led-on");
+}
+
+function wave (){
+  if(waveIndex < ledCount){
+  led[waveIndex].classList.toggle("led-on");
+  waveIndex = waveIndex + 1;
+  }else{
+  waveIndex = 0
+  }
+}
+
+function reverseWave (){
+  if(reverseWaveIndex > 0){
+  led[reverseWaveIndex].classList.toggle("led-on");
+  reverseWaveIndex = reverseWaveIndex - 1;
+  }else{
+  reverseWaveIndex = ledCount - 1;
+  }
+}
+
+let interval1 = setInterval(flicker, 70);
+let interval2 = setInterval(wave, 50);
+/*let interval3 = setInterval(reverseWave, 50);*/
+
+setTimeout(() => {
+  clearInterval(interval1);
+  clearInterval(interval2);
+/*  clearInterval(interval3); */  
+}, 600000);
+</script>
